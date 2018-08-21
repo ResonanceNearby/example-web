@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Resonance JS SDK example</title>
+</head>
+<body>
+<div id='result'></div>
+
+<script>
+    window.resonanceAsyncInit = function() {
+        if(!Resonance.isCompatible()) {
+            print('Your browser is not supported');
+            return;
+        }
+
+        var payload = null;
+        while (!payload) {
+            payload = prompt('Payload:');
+        }
+
+        startSearch(payload);
+    };
+
+    function print(text) {
+        var resultEl = document.getElementById('result');
+        resultEl.innerText += text + '\n';
+    }
+
+    function startSearch(payload) {
+        var resonance = new Resonance('7c6dc857-94f6-434f-ab5c-98b46fdb1049');
+
+        resonance.startSearch(JSON.stringify(payload), function(error) {
+            if(error) {
+                print('Error: ' + error);
+            } else {
+                print('Search started. My payload: \"' + payload + '\"');
+            }
+        });
+
+        resonance.on('nearbyFound', function(nearby) {
+            print('Found: \"' + nearby.payload + '\"');
+        });
+
+        resonance.on('nearbyLost', function (nearby) {
+            print('Lost: \"' + nearby.payload + '\"');
+        });
+
+        resonance.on('searchStopped', function(error) {
+            if(error) {
+                print('Error: ' + error);
+            } else {
+                print('Search stopped');
+            }
+        });
+    }
+</script>
+<script async defer src='https://cdn.getresonance.net/sdk/js/resonance-1.0.1.js'></script>
+</body>
+</html>
