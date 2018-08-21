@@ -1,5 +1,5 @@
 # Resonance JS SDK example app
-#### Resonance Nearby allows you to detect nearby devices across all platworms: Web, iOS and Android.
+#### Resonance Nearby allows you to detect nearby devices across all platforms: Web, iOS and Android.
 
 This app demonstrates how to use Resonance JS SDK in web browser.
 
