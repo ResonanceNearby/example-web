@@ -30,7 +30,7 @@
     function startSearch(payload) {
         var resonance = new Resonance('7c6dc857-94f6-434f-ab5c-98b46fdb1049');
 
-        resonance.startSearch(JSON.stringify(payload), function(error) {
+        resonance.startSearch(payload, function(error) {
             if(error) {
                 print('Error: ' + error);
             } else {
@@ -55,6 +55,6 @@
         });
     }
 </script>
-<script async defer src='https://cdn.getresonance.net/sdk/js/resonance-1.0.1.js'></script>
+<script async defer src='https://cdn.getresonance.net/sdk/js/resonance-1.0.2.js'></script>
 </body>
 </html>
