@@ -30,6 +30,8 @@
 <div id='nearby'></div>
 
 <script>
+    let nearbySet = {};
+
     window.resonanceAsyncInit = function() {
         if(!Resonance.isCompatible()) {
             printStatus('Your browser is not supported.');
@@ -56,12 +58,12 @@
         resultEl.innerText = text;
     }
 
-    function updateNearby(nearbyList) {
+    function updateNearby(payloads) {
         var resultEl = document.getElementById('nearby');
         resultEl.innerHTML = "<div>Nearby devices:</div>"
 
-        for(let nearby of nearbyList) {
-            resultEl.innerHTML += '<div class="nearby-item">' + nearby.payload + '</div>';
+        for(let payload of payloads) {
+            resultEl.innerHTML += '<div class="nearby-item">' + payload + '</div>';
         }
     }
 
@@ -77,13 +79,13 @@
             }
         });
 
-
         resonance.on('nearbyFound', function(nearby) {
-            updateNearby(resonance.getNearby());
+            nearbySet[nearby.payload] = nearby;
+            updateNearby(Object.keys(nearbySet));
         });
 
         resonance.on('nearbyLost', function (nearby) {
-            updateNearby(resonance.getNearby());
+            // TODO: handle removal
         });
 
         resonance.on('searchStopped', function(error) {
