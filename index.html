@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
     <style>
         body {
-            font-size: 21pt;
+            font-size: 19pt;
         }
 
         .nearby-item {
@@ -16,7 +16,7 @@
             border-radius: 10px;
             padding-left: 10px;
             text-align: center;
-            font-size: 21pt;
+            font-size: 19pt;
             line-height: 50px;
         }
     </style>
@@ -53,9 +53,13 @@
         resultEl.innerText = text;
     }
 
-    function addNearby(text) {
+    function updateNearby(nearbyList) {
         var resultEl = document.getElementById('nearby');
-        resultEl.innerHTML += '<div class="nearby-item">' + text + '</div>';
+        resultEl.innerHTML = "<div>Nearby devices:</div>"
+
+        for(let nearby of nearbyList) {
+            resultEl.innerHTML += '<div class="nearby-item">' + nearby.payload + '</div>';
+        }
     }
 
     function startSearch(payload) {
@@ -66,16 +70,17 @@
                 printStatus('Error: ' + error);
             } else {
                 printPayload('Current device name: \"' + payload + '\"')
-                printStatus('Search in progress...');
+                printStatus('Search in progress...\n');
             }
         });
 
+
         resonance.on('nearbyFound', function(nearby) {
-            addNearby('Found device: \"' + nearby.payload + '\"');
+            updateNearby(Resonance.getNearby());
         });
 
         resonance.on('nearbyLost', function (nearby) {
-            //TODO: handle nearby lost event
+            updateNearby(Resonance.getNearby());
         });
 
         resonance.on('searchStopped', function(error) {
