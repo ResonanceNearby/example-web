@@ -3,7 +3,12 @@
 <head>
     <meta charset='UTF-8'>
     <title>Resonance JS SDK example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
     <style>
+        body {
+            font-size: 21pt;
+        }
+
         .nearby-item {
             height: 50px;
             background: #6ce1a5;
@@ -11,7 +16,7 @@
             border-radius: 10px;
             padding-left: 10px;
             text-align: center;
-            font-size: 15pt;
+            font-size: 21pt;
             line-height: 50px;
         }
     </style>
@@ -50,7 +55,7 @@
 
     function addNearby(text) {
         var resultEl = document.getElementById('nearby');
-        resultEl.innerText += '<div class="nearby-item">' + text + '</div>';
+        resultEl.innerHTML += '<div class="nearby-item">' + text + '</div>';
     }
 
     function startSearch(payload) {
