@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
     <style>
         body {
-            font-size: 19pt;
+            font-size: 16pt;
         }
 
         .nearby-item {
@@ -15,9 +15,12 @@
             margin-bottom: 5px;
             border-radius: 10px;
             padding-left: 10px;
-            text-align: center;
-            font-size: 19pt;
+            font-size: 16pt;
             line-height: 50px;
+        }
+
+        #status {
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -75,7 +78,8 @@
         });
 
 
-        resonance.on('nearbyFound', function(nearby) {
+        resonance.on('nearbyFound', function(nea
+        rby) {
             updateNearby(resonance.getNearby());
         });
 
