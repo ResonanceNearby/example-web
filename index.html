@@ -76,11 +76,11 @@
 
 
         resonance.on('nearbyFound', function(nearby) {
-            updateNearby(Resonance.getNearby());
+            updateNearby(resonance.getNearby());
         });
 
         resonance.on('nearbyLost', function (nearby) {
-            updateNearby(Resonance.getNearby());
+            updateNearby(resonance.getNearby());
         });
 
         resonance.on('searchStopped', function(error) {
