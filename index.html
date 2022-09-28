@@ -3,28 +3,54 @@
 <head>
     <meta charset='UTF-8'>
     <title>Resonance JS SDK example</title>
+    <style>
+        .nearby-item {
+            height: 50px;
+            background: #6ce1a5;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            padding-left: 10px;
+            text-align: center;
+            font-size: 15pt;
+            line-height: 50px;
+        }
+    </style>
 </head>
 <body>
-<div id='result'></div>
+<div id='payload'></div>
+<div id='status'></div>
+<div id='nearby'></div>
 
 <script>
     window.resonanceAsyncInit = function() {
         if(!Resonance.isCompatible()) {
-            print('Your browser is not supported');
+            printStatus('Your browser is not supported.');
             return;
         }
 
-        var payload = null;
+        var payload =  null;
         while (!payload) {
-            payload = prompt('Payload:');
+            payload = localStorage.getItem('payload') || null;
+            payload = prompt('Enter device name:', payload);
         }
+        localStorage.setItem('payload', payload);
 
         startSearch(payload);
     };
 
-    function print(text) {
-        var resultEl = document.getElementById('result');
-        resultEl.innerText += text + '\n';
+    function printStatus(text) {
+        var resultEl = document.getElementById('status');
+        resultEl.innerText = text;
+    }
+
+    function printPayload(text) {
+        var resultEl = document.getElementById('payload');
+        resultEl.innerText = text;
+    }
+
+    function addNearby(text) {
+        var resultEl = document.getElementById('nearby');
+        resultEl.innerText += '<div class="nearby-item">' + text + '</div>';
     }
 
     function startSearch(payload) {
@@ -32,25 +58,26 @@
 
         resonance.startSearch(payload, function(error) {
             if(error) {
-                print('Error: ' + error);
+                printStatus('Error: ' + error);
             } else {
-                print('Search started. My payload: \"' + payload + '\"');
+                printPayload('Current device name: \"' + payload + '\"')
+                printStatus('Search in progress...');
             }
         });
 
         resonance.on('nearbyFound', function(nearby) {
-            print('Found: \"' + nearby.payload + '\"');
+            addNearby('Found device: \"' + nearby.payload + '\"');
         });
 
         resonance.on('nearbyLost', function (nearby) {
-            print('Lost: \"' + nearby.payload + '\"');
+            //TODO: handle nearby lost event
         });
 
         resonance.on('searchStopped', function(error) {
             if(error) {
-                print('Error: ' + error);
+                printStatus('Error: ' + error);
             } else {
-                print('Search stopped');
+                printStatus('Search stopped');
             }
         });
     }
