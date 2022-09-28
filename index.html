@@ -31,7 +31,7 @@
         var payload =  null;
         while (!payload) {
             payload = localStorage.getItem('payload') || null;
-            payload = prompt('Enter device name:', payload);
+            payload = prompt('Enter device name:', payload || undefined);
         }
         localStorage.setItem('payload', payload);
 
